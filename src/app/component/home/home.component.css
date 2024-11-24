@@ -26,10 +26,7 @@
 }
 
 /* Cibler le bouton ✖ pour le rendre blanc */
-.close-btn {
-  color: white !important;  /* Appliquer la couleur blanche */
-  fill: white !important;   /* Appliquer aussi la couleur blanche à l'icône si c'est un SVG */
-}
+
 
 /* Responsive adjustments */
 @media (min-width: 769px) {
