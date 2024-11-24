@@ -1,30 +1,41 @@
 .dashboard-container {
   text-align: center;
   margin: 20px;
-  padding: 0 10px; /* Ajout de padding pour les petits écrans */
+  padding: 0 10px; /* Padding pour les petits écrans */
 }
 
 .dashboard-cards {
   display: flex;
   flex-wrap: wrap; /* Permet aux cartes de s'empiler sur les petits écrans */
-  justify-content: center; /* Centre les éléments */
+  justify-content: space-between; /* Espacement égal entre les cartes */
   gap: 20px; /* Espacement entre les cartes */
   margin-top: 20px;
 }
 
 .card {
-  width: 100%; /* Par défaut, occupe toute la largeur */
-  max-width: 500px; /* Limite la largeur maximale */
+  width: 48%; /* Augmente la largeur des cartes à 48% de la largeur du conteneur */
+  max-width: 600px; /* Limite la largeur maximale des cartes à 600px */
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Assure que le padding ne fait pas dépasser la largeur */
+  font-size: 16px; /* Taille de police par défaut pour les écrans plus grands */
+}
+
+/* Réduction de la taille du texte à l'intérieur des cartes */
+.card h4 {
+  font-size: 20px; /* Réduit la taille du titre */
+}
+
+.card p, .card ul li {
+  font-size: 14px; /* Réduit la taille du texte des paragraphes et des éléments de liste */
 }
 
 .backtest-btn {
   background-color: black;
   color: white;
-  padding: 10px 40px; /* Ajusté pour éviter un excès sur les petits écrans */
+  padding: 10px 40px; /* Ajuste le padding pour les petits écrans */
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -36,24 +47,35 @@
   text-align: left;
 }
 
-/* Responsive styles */
+/* Styles responsive */
 @media (max-width: 768px) {
   .dashboard-cards {
-    flex-direction: column; /* Empile les cartes en colonne */
+    flex-direction: column; /* Empile les cartes en colonne sur les petits écrans */
+    align-items: center; /* Centre les cartes */
   }
 
   .card {
-    width: 90%; /* Réduit la largeur pour les petits écrans */
-    margin: 0 auto; /* Centre les cartes */
+    width: 90%; /* Les cartes prennent 90% de la largeur de l'écran sur mobile */
+    margin: 10px 0; /* Espacement vertical entre les cartes */
+    font-size: 14px; /* Réduit la taille du texte sur les petits écrans */
+  }
+
+  .card h4 {
+    font-size: 18px; /* Réduit la taille du titre sur mobile */
+  }
+
+  .card p, .card ul li {
+    font-size: 12px; /* Réduit la taille du texte des paragraphes et des éléments de liste sur mobile */
   }
 
   .backtest-btn {
-    width: 100%; /* Bouton s'adapte à la largeur de l'écran */
+    width: 100%; /* Le bouton prend toute la largeur sur mobile */
     padding: 10px 20px;
+    font-size: 14px; /* Réduit la taille du texte du bouton */
   }
 
   .key-features {
-    text-align: center; /* Recentre le texte pour les petits écrans */
+    text-align: center; /* Centre le texte sur les petits écrans */
   }
 
   .accordion-header button {
@@ -61,17 +83,25 @@
   }
 
   .accordion-body {
-    font-size: 13px; /* Réduit la taille des textes */
+    font-size: 13px; /* Réduit la taille du texte des corps des accordéons */
   }
 }
 
 @media (max-width: 480px) {
   .card {
-    padding: 15px; /* Réduit le padding pour s'adapter aux très petits écrans */
+    padding: 15px; /* Réduit le padding pour les très petits écrans */
+  }
+
+  .card h4 {
+    font-size: 16px; /* Réduit encore la taille du titre pour les petits écrans */
+  }
+
+  .card p, .card ul li {
+    font-size: 12px; /* Réduit la taille du texte sur les très petits écrans */
   }
 
   h1 {
-    font-size: 24px; /* Réduit la taille du titre */
+    font-size: 24px; /* Réduit la taille du titre principal */
   }
 
   h3 {
@@ -79,6 +109,6 @@
   }
 
   .backtest-btn {
-    font-size: 14px; /* Réduit la taille du texte */
+    font-size: 14px; /* Réduit la taille du texte du bouton */
   }
 }
