@@ -1,0 +1,70 @@
+
+
+/* Sidebar styles */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Cache la sidebar */
+  width: 250px;
+  height: 100%;
+  background-color: #131212;
+  transition: left 0.3s ease;
+}
+
+/* Styles pour la sidebar quand elle est active (ouverte) */
+#sidebar.active {
+  left: 0; /* Sidebar visible quand active */
+}
+.sidebar-wrapper {
+  background-color: #474747; /* Cette règle applique la même couleur à l'intérieur de la sidebar */
+}
+
+.sidebar-hide {
+  display: none; /* Masquer le bouton de menu en grand écran (desktop) */
+}
+
+.sidebar-wrapper .menu .sidebar-link {
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (min-width: 769px) {
+  #sidebar {
+    left: 0; /* Toujours visible sur desktop */
+    width: 250px;
+  }
+  
+  .sidebar-hide {
+    display: none; /* Cache le bouton de bascule en desktop */
+  }
+}
+
+
+@media (max-width: 768px) {
+  /* Afficher le bouton ☰ sur mobile */
+  .sidebar-hide {
+    display: block; /* Le bouton s'affiche uniquement en mobile */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+    background: transparent;
+    border: none;
+    color: rgb(14, 13, 13);
+    font-size: 24px;
+  }
+  
+
+  #sidebar {
+    left: -250px; /* Sidebar cachée par défaut */
+    width: 250px;
+  }
+
+  #sidebar.active {
+    left: 0; /* Sidebar visible lorsqu'active */
+  }
+}
+
+
+
+

@@ -1,0 +1,187 @@
+/* Basic reset for margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #888686;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+  overflow-x: hidden; /* Éviter les débordements horizontaux */
+}
+
+/* Conteneur du formulaire de connexion */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1%;
+  padding: 10px;
+}
+
+/* Boîte de connexion */
+.login-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
+  overflow: hidden; /* Eviter tout débordement */
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo img {
+  width: 84px;
+  margin-bottom: 20px;
+  max-width: 100%; /* S'assurer que l'image ne dépasse pas */
+}
+
+/* Formulaire */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login-form label {
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%; /* Garantir que les champs ne dépassent pas */
+}
+
+/* Options de mot de passe oublié */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.forgot-password {
+  color: #0073aa;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Bouton de connexion */
+.login-button {
+  background-color: #0073aa;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #005177;
+}
+
+/* Lien pour la création de compte */
+.signup-link {
+  margin-top: 20px;
+}
+
+.signup-link a {
+  color: #0073aa;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries pour les petits écrans (mobiles) */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .login-box {
+    padding: 15px;
+  }
+
+  .logo img {
+    width: 70px;
+  }
+
+  .login-form label {
+    font-size: 14px;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 8px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .forgot-password {
+    margin-top: 10px;
+  }
+
+  .login-button {
+    padding: 8px;
+  }
+
+  .signup-link a {
+    font-size: 14px;
+  }
+}
+
+/* Media Queries pour les écrans moyens (tablettes) */
+@media screen and (max-width: 1024px) {
+  .login-box {
+    width: 90%; /* Réduire la largeur de la boîte pour les tablettes */
+  }
+
+  .logo img {
+    width: 70px;
+  }
+}
+
+/* Media Queries pour les très grands écrans */
+@media screen and (min-width: 1200px) {
+  .login-box {
+    width: 400px; /* Largeur fixe sur les très grands écrans */
+  }
+}
+
+/* Media Queries pour les grands écrans comme les téléphones avec très haute résolution */
+@media screen and (min-width: 800px) and (max-width: 1400px) {
+  .login-box {
+    width: 500px; /* Largeur plus grande pour les écrans intermédiaires */
+  }
+  .logo img {
+    width: 90px; /* Agrandir légèrement le logo */
+  }
+}

@@ -1,0 +1,572 @@
+<div class="table-container">
+  <fieldset>
+    <legend>Portfolio Creation</legend>
+    <div class="inner-container">
+      <mat-horizontal-stepper [linear]="true" (selectionChange)="onStepChange($event)"  #stepper>
+        <!-- Step 1: File Upload -->
+       
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup" (ngSubmit)="onSubmit()">
+            <ng-template matStepLabel>Load Prices (.csv)</ng-template>
+            
+           <!-- Conteneur pour aligner mat-select et mat-icon horizontalement -->
+           <div style="display: flex; align-items: center;">
+            <!-- Champ de sélection avec mat-select -->
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Choose an index</mat-label>
+              <mat-select formControlName="indexSelection" [disabled]="isFileUploaded"  (selectionChange)="onIndexChange($event)" >
+                <mat-option *ngFor="let index of indexoption" [value]="index">
+                  {{ index }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <!-- Icône de suppression alignée à droite avec couleur dynamique -->
+            <mat-icon 
+              style="cursor: pointer; margin-left: 8px;"
+              (click)="clearSelection()"
+              [ngClass]="isSelected() ? 'icon-red' : 'icon-black'"
+            >delete</mat-icon>
+          </div>
+          
+
+            <br>
+        
+            <!-- File input for CSV upload -->
+            <div *ngIf="isLoadingPriceUpload" class="spinner-container">
+              <div class="spinner"></div>
+            </div>
+            <input #fileInput type="file" (change)="onFileSelected($event)" formControlName="fileUpload" class="file-input" [disabled]="isFileInputDisabled"  />   <!-- You can replace the exclamation icon with any icon library you prefer -->
+            <mat-icon *ngIf="isFileUploaded" (click)="deleteFile()" class="delete-icon">delete</mat-icon>
+<!-- Affichage des états -->
+
+          
+            <br>
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="instrument_id">
+                  <th mat-header-cell *matHeaderCellDef> Instrument Id </th>
+                  <td mat-cell *matCellDef="let element" [ngStyle]="{'color': instrumentColors[element.instrument_id]}">
+                    {{element.instrument_id}}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                  <th mat-header-cell *matHeaderCellDef> Price </th>
+                  <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef> Date </th>
+                  <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+            
+          </form>
+        </mat-step>
+        
+
+        <!-- Step 2: Additional Data -->
+        <div class="table-container2">
+       
+          <mat-step [stepControl]="secondFormGroup">
+          
+
+          <form [formGroup]="secondFormGroup" >
+            <ng-template matStepLabel>Upload Weights</ng-template>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Choose an index</mat-label>
+              <mat-select formControlName="indexweight" required>
+                <mat-option *ngFor="let index of indexSelectionweight" [value]="index">
+                  {{ index }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <br>
+            <div>
+              <!-- Form to add a new row -->
+             
+              
+              <!-- Dynamic Table -->
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ticker</th>
+                    <th>Weight</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of portfolio; let i = index">
+                    <!-- Colonne Ticker -->
+                    <td>
+                      <ng-container *ngIf="isEditing[i]; else viewModeTicker">
+                        <!-- Mode édition (input) -->
+                        <input [formControl]="getFormControl('ticker' + i)" class="custom-input" 
+                          
+
+                         />
+                      </ng-container>
+                      <ng-template #viewModeTicker>
+                        <!-- Mode affichage (label) -->
+                        {{ item.ticker }}
+                      </ng-template>
+                    </td>
+                
+                    <!-- Colonne Weight -->
+                    <td>
+                      <ng-container *ngIf="isEditing[i]; else viewModeWeight">
+                        <!-- Mode édition (input) -->
+                        <input [formControl]="getFormControl('weight' + i)"  type="number" step="0.01" class="custom-input"
+                       
+                        (input)="enforceLimits(i, $event)"  
+                        (blur)="enforceLimits(i, $event)"
+
+
+                         />
+
+                      </ng-container>
+                      <ng-template #viewModeWeight>
+                        <!-- Mode affichage (label) -->
+                        {{ item.weight }}
+                      </ng-template>
+                    </td>
+                   
+                
+                    <!-- Colonne Actions -->
+                   <!-- Colonne Actions -->
+<td>
+  <ng-container *ngIf="item.ticker && item.weight !== undefined">
+    <!-- Bouton Edit -->
+   
+    <!-- Bouton Delete -->
+    <button (click)="deleteRow(i)" class="btn-icon delete-btn">
+      <i class="fas fa-trash"></i>
+    </button>
+  </ng-container>
+</td>
+
+                  </tr>
+                
+                  <!-- Ligne Cash (total weight) -->
+                  <tr>
+                    <td>cash</td>
+                   <!-- <td *ngIf="totalWeight > 1">The sum must be less than or equal to 1</td>-->
+                  <td> {{ cashValuse }}</td>
+                    
+                  </tr>
+                </tbody>
+                
+                
+              </table>
+
+              <form [formGroup]="addPortfolioItemForm" (ngSubmit)="addRow()"  [ngClass]="{'disabled-form': isFileUploaded}">
+                
+                <div class="form-row">
+                  <mat-form-field class="input-spacing">
+                    <mat-label>Select Ticker</mat-label>
+                    <mat-select [(value)]="selectedInstrument" formControlName="ticker"  [disabled]="isFileUploaded" (blur)="validateTickerAndWeight()" >
+                      <div class="fixed">
+                        <mat-form-field  style="margin: 5px;padding-left: 10px;padding-right: 10px;
+                                      border: 1.5px solid rgba(216, 220, 230, 0.87); border-radius: 5px;
+                                      position: absolute;top: 0;width: calc(100% - 30px);background: white;z-index: 100;height:65px;">
+                          <input matInput placeholder="" style="padding-left:10px" (input)="lookup($event);" #inputFilter>
+                          <i class="fa fa-search" matPrefix></i>
+                          <i class="fa fa-times" matSuffix (click)="clean(inputFilter);"></i>
+                        </mat-form-field>
+                      </div>
+                      <div style="padding-top: 80px">
+                        <mat-option *ngFor="let instrument of filteredDataToSearch" [value]="instrument.instrument_id">
+                          {{ instrument.instrument_id }}
+                        </mat-option>
+                      </div>
+                      
+                    </mat-select>
+                  </mat-form-field>
+                
+                  <mat-form-field class="input-spacing">
+                    <input
+                      matInput  
+                      formControlName="weight"
+                      placeholder="Weight"
+                      type="number"
+                      step="0.01"
+                      [attr.max]="1"
+                      [attr.min]="-1"
+                      [disabled]="isFileUploaded"
+                      (blur)="validateTickerAndWeight()"
+                    />
+                  </mat-form-field>
+                
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="
+                      !addPortfolioItemForm.valid ||
+                      totalWeight + addPortfolioItemForm.get('weight')?.value > 1 ||
+                      totalWeight + addPortfolioItemForm.get('weight')?.value < -1 ||
+                      (totalWeight + addPortfolioItemForm.get('weight')?.value - 1) < -1 ||
+                      isButtonAddDisabled  || !addPortfolioItemForm.get('weight')?.value
+                     
+                    "
+                  >
+                    <mat-icon>add</mat-icon>
+                    Add Row
+                  </button>
+                </div>
+                
+                
+              </form>
+
+            </div>
+            <div *ngIf="isLoadingWeightUpload" class="spinner-container">
+              <div class="spinner"></div>
+            </div>
+            <input #fileweigh type="file" (change)="onFileSelectedForStep2($event)" formControlName="fileUploadStep2" class="file-input"  [disabled]="isFileWeighDisabled"/>
+            <mat-icon *ngIf="isFileWeightUploaded" (click)="deleteFileWeights()" class="delete-icon">delete</mat-icon>
+
+      <div *ngIf="showTooltip" class="tooltip">
+          To enable this option, you must be subscribed.
+      </div>
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="dataSourceStep2" class="mat-elevation-z8">
+                <ng-container matColumnDef="instrument_id">
+                  <th mat-header-cell *matHeaderCellDef> Instrument ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.instrument_id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="weight">
+                  <th mat-header-cell *matHeaderCellDef> Weight </th>
+                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef> Date </th>
+                  <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsStep2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsStep2;"></tr>
+              </table>
+            </div>
+          </form>
+         
+        </mat-step>
+      </div>
+
+        <!-- Step 3: Portfolio Settings -->
+        <mat-step [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup" >
+            <ng-template matStepLabel>Configure Parameter</ng-template>
+            
+            <!-- Date Range Input for Start and End Date -->
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;margin-top: 10px;">
+              <!-- Start Date Input -->
+              <mat-form-field appearance="outline" style="flex: 1; margin-right: 10px;">
+                <mat-label>Start Date</mat-label>
+                <input matInput type="date" formControlName="startDate"  [value]="startDate" />
+              </mat-form-field>
+              
+        
+              <!-- End Date Input -->
+              <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
+                <mat-label>End Date</mat-label>
+                <input matInput type="date" formControlName="startDate" [value]="endtDate"  />
+              </mat-form-field>
+            </div>
+            <div *ngIf="thirdFormGroup.errors?.['invalidDateRange']" style="color: red; margin-top: 10px;">
+              Start Date cannot be later than End Date.
+            </div>
+        
+            <!-- Periodic Rebalancing Switch -->
+            <mat-slide-toggle formControlName="periodicRebalancing" [disabled]="periodicRebalancingDisabled">
+              Periodic Rebalancing
+          </mat-slide-toggle>
+          
+          <mat-slide-toggle formControlName="fractionalShares">
+              Fractional Shares
+          </mat-slide-toggle>
+          
+        
+            <!-- Initial Capital and Rebalancing Frequency Inputs in a Flexbox Container -->
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+              <!-- Initial Capital Input -->
+              <mat-form-field appearance="outline" style="flex: 1; margin-right: 10px;">
+                <mat-label>Initial Capital</mat-label>
+                <input matInput type="number" formControlName="initialCapital" />
+              </mat-form-field>
+        
+              <!-- Monthly Cash Flow Input -->
+              <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
+                <mat-label>Monthly Cash Flow</mat-label>
+                <input matInput type="number" formControlName="monthlyCash" min="0" />
+              </mat-form-field>
+        
+              <!-- Rebalancing Frequency Input -->
+              <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
+                <mat-label>Rebalancing Frequency</mat-label>
+                <mat-select formControlName="rebalancingFrequency" required>
+                  <mat-option *ngFor="let index of RebalancingFrequency" [value]="index">
+                    {{ index }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        
+            <!-- Per-Transaction Fee Range Slider -->
+            <div>
+              Per-Transaction Fee (in %): {{ transactionFeeValue | number:'1.2-2' }} %
+            </div>
+        
+            <!-- New Range Input at the bottom -->
+            <div class="range-input-container" style="margin-top: 20px;">
+              <input 
+                type="range" 
+                id="customRange" 
+                min="1" 
+                max="15" 
+                step="1" 
+                (input)="onRangeChange($event)"
+                value="1"  
+              />
+            </div>
+        
+            <!-- Optional Message -->
+            <div *ngIf="showCongratulations" class="congratulations-message">
+              Congratulations insertWeights
+            </div>
+          </form>
+        </mat-step>
+        
+        
+        <!-- Step 4: Benchmark Weights -->
+        <mat-step [stepControl]="fourthFormGroup">
+          <form [formGroup]="fourthFormGroup"  >
+            <ng-template matStepLabel>
+              Set Benchmark
+            </ng-template>
+                    <ng-template matStepLabel>Configure Parameter</ng-template>
+
+            <!-- Section pour la stratégie -->
+            <div class="strategy-section">
+              <h3 class="section-header">Choose Your Strategy</h3>
+              <div class="checkbox-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" 
+                         id="equalWeight" 
+                         formControlName="equalWeight" 
+                         (change)="onCheckboxChange($event, 'equalWeight')">
+                  <span class="checkmark"></span>
+                  Equal Weight Portfolio
+                </label>
+                <label class="checkbox-container">
+                  <input type="checkbox" 
+                         id="minimumVariance" 
+                         formControlName="minimumVariance" 
+                         (change)="onCheckboxChange($event, 'minimumVariance')">
+                  <span class="checkmark"></span>
+                  Tangency Portfolio
+                </label>
+              </div>
+            </div>
+            
+            
+            
+        
+            <!-- Section pour le fichier de poids de référence -->
+            <div class="file-upload-section">
+              <label for="benchmarkWeightsFile" class="upload-label">Benchmark Weights:</label>
+              <input 
+                id="benchmarkWeightsFile" 
+                type="file" 
+                (change)="onBenchmarkWeightsFileSelected($event)" 
+                formControlName="benchmarkWeightsFile" 
+                class="file-input" 
+                [disabled]="isDisabled" />
+                
+              <!-- Icône d'information -->
+              <span 
+              class="info-icon" 
+              (mouseover)="showTooltip = true" 
+              (mouseleave)="showTooltip = false" 
+              title="To enable this option, you must be subscribed to gold version">
+              &#9888;
+            </span>
+            <div *ngIf="showTooltip" class="tooltip">
+              To enable this option, you must be subscribed.
+            </div>
+            </div>
+        
+            <!-- Section pour le bouton de création de benchmark -->
+            <div class="button-section">
+              <button 
+                mat-raised-button 
+                color="primary" 
+                (click)="createBenchmark()">
+                Create Benchmark
+              </button>
+            </div>
+        
+            <!-- Tableau des données de poids de référence -->
+            <div *ngIf="benchmarkWeightsData.length > 0" class="table-section">
+              <table class="benchmark-table">
+                <thead>
+                  <tr>
+                    <th>Instrument ID</th>
+                    <th>Weight</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let element of benchmarkWeightsData">
+                    <td>{{element.instrument_id}}</td>
+                    <td>{{element.weight}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </mat-step>
+        
+        
+        <mat-step>
+          <ng-template matStepLabel>Overview</ng-template>
+          <div class="preview-container">
+            
+            <h3 class="section-title">Summary of portfolio creation</h3>
+            
+            <!-- Aperçu de l'étape 1 -->
+            <div class="step-section">
+              <h4 class="step-subtitle">1. Downloaded data </h4>
+              <p>Selected index   : <strong>{{ firstFormGroup.get('indexSelection')?.value ?? 'Aucun index choisi' }}</strong></p>
+              <div *ngIf="dataSource && dataSource.length > 0">
+                <h5>Contenu du fichier :</h5>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Instrument ID</th>
+                      <th>Price</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of dataSource">
+                      <td>{{ row.instrument_id }}</td>
+                      <td>{{ row.price }}</td>
+                      <td>{{ row.date }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Aperçu de l'étape 2 -->
+            <div class="step-section">
+              <h4 class="step-subtitle">2. Portfolio weight   </h4>
+              <p>Index sélectionné : <strong>{{ secondFormGroup.get('indexweight')?.value ?? 'Aucun index choisi' }}</strong></p>
+              <table class="weight-table">
+                <thead>
+                  <tr>
+                    <th>Ticker</th>
+                    <th>weight/th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of portfolio">
+                    <td>{{ item.ticker }}</td>
+                    <td>{{ item.weight }}</td>
+                  </tr>
+                  <tr>
+                    <td>Cash</td>
+                    <td>{{ cashValuse }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Aperçu de l'étape 3 -->
+            <div class="step-section">
+              <h4 class="step-subtitle">3.Simulation parameters</h4>
+              <p>Initial capital: <strong>{{ thirdFormGroup.get('initialCapital')?.value ?? 'Aucun capital choisi' }}</strong></p>
+              <p>Monthly Cash Flow: <strong>{{ thirdFormGroup.get('monthlyCash')?.value ?? 'Aucun flux choisi' }}</strong></p>
+              <p>Fréquence de rééquilibrage : <strong>{{ thirdFormGroup.get('rebalancingFrequency')?.value ?? 'Aucune fréquence choisie' }}</strong></p>
+              <p>Rebalancing frequency : <strong>{{ thirdFormGroup.get('periodicRebalancing')?.value ? 'Activé' : 'Désactivé' }}</strong></p>
+              <p>Transaction fees per transaction : <strong>{{ transactionFeeValue | number:'1.2-2' }} %</strong></p>
+            </div>
+            
+            <!-- Aperçu de l'étape 4 -->
+            <div class="step-section">
+              <h4 class="step-subtitle">4. Benchmark</h4>
+              <p>Selected strategy: </p>
+              <ul>
+                <li *ngIf="fourthFormGroup.get('benchmarkStrategy.equalWeight')?.value">Equal Weight Portfolio</li>
+                <li *ngIf="fourthFormGroup.get('benchmarkStrategy.minimumVariance')?.value">Tangency Portfolio</li>
+              </ul>
+              <div *ngIf="benchmarkWeightsData.length > 0">
+                <h5>Poids de référence :</h5>
+                <table class="benchmark-table">
+                  <thead>
+                    <tr>
+                      <th>Instrument ID</th>
+                      <th>Poids</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let element of benchmarkWeightsData">
+                      <td>{{ element.instrument_id }}</td>
+                      <td>{{ element.weight }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        
+          </div>
+        </mat-step>
+        
+        
+
+        
+        
+      </mat-horizontal-stepper>
+    </div>
+  </fieldset>
+  
+  <!-- External Navigation Buttons -->
+  <div class="external-navigation-buttons">
+    <button mat-button *ngIf="stepper.selectedIndex > 0" (click)="stepper.previous()" class="button-gray">Back</button>
+
+    <!-- Conditionally display the 'Next' button for steps other than the fourth -->
+    
+    
+    <button
+  *ngIf="stepper.selectedIndex < 4"
+  class="next-button right-aligned"
+  mat-button
+  style="color: rgb(236, 234, 234); font-size: 16px;" 
+  (click)="stepper.next();"
+  [disabled]="stepper.selectedIndex === 1 && portfolio.length === 0 && !isFileWeightUploaded"
+  
+>
+  Next
+</button>
+
+  
+    <!-- Display the 'Run Simulation' button on the fourth step and disable it if the form is invalid -->
+    <button 
+      *ngIf="stepper.selectedIndex === 4"
+      mat-raised-button
+      color="primary"
+      [disabled]="fourthFormGroup.invalid" 
+class="right-aligned"
+(click)="submitData()"
+    >
+      Run Simulation
+    </button>
+    <div class="loading-overlay" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Backup in progress...</p>
+    </div>
+    
+  </div>
+  
+</div>

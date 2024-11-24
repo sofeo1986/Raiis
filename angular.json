@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/Raiis/",
             "outputPath": "dist/backtesting",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -25,22 +26,32 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/bootstrap.css",
+              "src/assets/vendors/iconly/bold.css",
+              "src/assets/vendors/perfect-scrollbar/perfect-scrollbar.css",
+              "src/assets/vendors/bootstrap-icons/bootstrap-icons.css",
+              "src/assets/css/app.css"
             ],
-            "scripts": []
+            "scripts": [
+               "node_modules/bootstrap/dist/js/bootstrap.min.js"
+             
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
@@ -48,7 +59,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -84,10 +101,21 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "src/assets/css/bootstrap.css",
+              "src/assets/vendors/iconly/bold.css",
+              "src/assets/vendors/perfect-scrollbarperfect-scrollbar.css",
+              "src/assets/vendors/bootstrap-icons/bootstrap-icons.css",
+              "src/css/vendors/app.css"
             ],
-            "scripts": []
+            "scripts": [
+             
+            ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

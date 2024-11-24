@@ -1,0 +1,84 @@
+.dashboard-container {
+  text-align: center;
+  margin: 20px;
+  padding: 0 10px; /* Ajout de padding pour les petits écrans */
+}
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux cartes de s'empiler sur les petits écrans */
+  justify-content: center; /* Centre les éléments */
+  gap: 20px; /* Espacement entre les cartes */
+  margin-top: 20px;
+}
+
+.card {
+  width: 100%; /* Par défaut, occupe toute la largeur */
+  max-width: 500px; /* Limite la largeur maximale */
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.backtest-btn {
+  background-color: black;
+  color: white;
+  padding: 10px 40px; /* Ajusté pour éviter un excès sur les petits écrans */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.key-features {
+  margin-top: 40px;
+  text-align: left;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dashboard-cards {
+    flex-direction: column; /* Empile les cartes en colonne */
+  }
+
+  .card {
+    width: 90%; /* Réduit la largeur pour les petits écrans */
+    margin: 0 auto; /* Centre les cartes */
+  }
+
+  .backtest-btn {
+    width: 100%; /* Bouton s'adapte à la largeur de l'écran */
+    padding: 10px 20px;
+  }
+
+  .key-features {
+    text-align: center; /* Recentre le texte pour les petits écrans */
+  }
+
+  .accordion-header button {
+    font-size: 14px; /* Réduit la taille des boutons */
+  }
+
+  .accordion-body {
+    font-size: 13px; /* Réduit la taille des textes */
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 15px; /* Réduit le padding pour s'adapter aux très petits écrans */
+  }
+
+  h1 {
+    font-size: 24px; /* Réduit la taille du titre */
+  }
+
+  h3 {
+    font-size: 18px; /* Réduit la taille des sous-titres */
+  }
+
+  .backtest-btn {
+    font-size: 14px; /* Réduit la taille du texte */
+  }
+}

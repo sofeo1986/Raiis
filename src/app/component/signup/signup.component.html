@@ -1,0 +1,38 @@
+<body>
+    <div class="login-container">
+       <div class="login-box">
+           <div class="logo">
+               <img src="assets/images/icone2.png" alt="Site Logo">
+           </div>
+           <form class="login-form" [formGroup]="signupForm" (ngSubmit)="onSignUp()">
+               <label for="email"> Email Address</label>
+               <input type="text" name="email" id="email" formControlName="email" >
+               <i style="color:tomato" *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
+                Email is required and must be valid.
+              </i>
+              <label for="password">Password</label>
+              <input type="password" id="password" formControlName="password">
+              <i style="color:tomato" *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+                Password must be at least 6 characters.
+              </i>
+        
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" formControlName="confirmPassword">
+              <i style="color:tomato" *ngIf="signupForm.controls['confirmPassword'].invalid && signupForm.controls['confirmPassword'].touched">
+                Please confirm your password.
+              </i>
+        
+              <div *ngIf="errorMessage" style="color:tomato" class="error-message">
+                {{ errorMessage }}
+              </div>
+    
+               
+               <input type="submit" value="Sign Up" class="login-button">
+           </form>
+           <div class="signup-link">
+            <a [routerLink]="'/login'">Already have an account? Log In</a>
+
+        </div>
+       </div>
+    </div>
+    </body>

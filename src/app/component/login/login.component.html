@@ -1,0 +1,36 @@
+<body>
+<div class="login-container">
+   <div class="login-box">
+       <div class="logo">
+           <img src="assets/images/icone2.png" alt="Site Logo">
+       </div>
+       <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSignIn()">
+           <label for="email"> Email Address</label>
+           <input type="text" name="email" id="email" formControlName="email" >
+           <i style="color:tomato"
+           *ngIf="loginForm.controls['email'].invalid
+            && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched
+           )"
+           >Email is required and Must Be Valid</i>
+           <label for="password">Password</label>
+           <input type="password" id="password" name="password" formControlName="password">
+           <i style="color:tomato"
+           *ngIf="loginForm.controls['password'].invalid
+            && (loginForm.controls['password'].dirty ||
+           loginForm.controls['password'].touched)"
+           >Password Must Be at Least 6 Characters</i>
+           <div class="form-options">
+               
+               <a href="#" class="forgot-password">Forgot your password?</a>
+           </div>
+           <div *ngIf="errorMessage" style="color:tomato"   class="error-message">{{ errorMessage }}</div>
+
+           
+           <input type="submit" value="Log In" class="login-button">
+       </form>
+       <div class="signup-link">
+           <a [routerLink]="'/signup'">Create a new account</a>
+       </div>
+   </div>
+</div>
+</body>

@@ -1,0 +1,489 @@
+fieldset {
+  border: 2px solid #007bff; /* Example border color */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Prevent outer scrolling */
+  margin-bottom: 20px; /* Add space between fieldsets */
+  margin-top: 30px; /* Add space between fieldsets */
+  height: 100%;
+
+}
+
+
+.expanded-fieldset {
+  min-height: 800px; /* Vous pouvez ajuster la hauteur selon vos besoins */
+  height: auto; /* S'adapte au contenu */
+  border: 2px solid #4CAF50; /* Pour illustrer la différence (facultatif) */
+}
+
+
+
+legend {
+  font-weight: bold;
+  font-size: 1.2em; /* Adjust the font size as needed */
+  color: #007bff; /* Match the border color */
+}
+
+.table-container {
+  height: 100%;
+}
+
+.inner-container {
+  max-height: 500px; /* Adjust as necessary for your design */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.table-wrapper {
+  overflow-y: visible !important; /* Disable vertical scroll */
+}
+
+
+.table {
+  width: 100%; /* Ensure the table takes full width */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
+.mat-table {
+  min-width: 600px; /* Set a minimum width for the table */
+}
+
+mat-header-cell,
+mat-cell {
+  padding: 8px;
+}
+
+.first-div {
+  padding-top: 10%;
+}
+.next-button {
+  background-color: black;
+  color: white; /* To make the text visible against the black background */
+  border: none;
+  width: 100px;
+
+}
+.slider-container, .range-input-container {
+  width: 100%;
+}
+
+mat-slider {
+  width: 100%; /* Ensure the Material slider takes up full width */
+}
+
+input[type="range"] {
+  width: 100%; /* Ensure the native range input takes up full width */
+}
+.file-input {
+  margin-bottom: 20px; /* Adjust the value as needed */
+  color: rgb(48, 47, 47);
+  width: 70%;
+  background-color: gray;
+  
+}
+.full-width {
+  width: 100%;
+}
+.exclamation {
+  font-size: 18px; /* Increase the size of the exclamation mark */
+  margin-right: 5px; /* Space between exclamation mark and text */
+  color: orange;
+}
+.info-icon {
+  color: #f5a623;
+  font-size: 18px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  top: -10px;
+  left: 100%;
+  transform: translateX(10px);
+  z-index: 1;
+  white-space: nowrap;
+}
+.button-section {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+}
+
+/* Styles pour le tableau */
+.benchmark-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.benchmark-table th,
+.benchmark-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.benchmark-table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.table-section {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 12px;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.btn-icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #007bff;
+  margin-right: 10px;
+}
+
+.btn-icon:hover {
+  color: #0056b3;
+}
+
+.delete-btn {
+  color: #dc3545;
+}
+
+.delete-btn:hover {
+  color: #c82333;
+}
+.custom-input {
+  border: 1px solid #ccc; /* Diminue la bordure */
+  border-radius: 4px;     /* Adoucit les coins */
+  padding: 5px;           /* Ajoute un léger espacement interne */
+  outline: none;          /* Retire la bordure de focus */
+}
+
+.custom-input:focus {
+  border-color: #aaa;     /* Change la couleur de la bordure lors du focus */
+  box-shadow: none;       /* Enlève l'effet d'ombre autour lors du focus */
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.text-red {
+  color: red;
+}
+.text-green {
+  color: green;
+}
+.right-aligned {
+  float: right;
+  width: 200px;
+}
+.button-gray {
+  background-color: gray;
+  color: white; /* Optionnel : changer la couleur du texte */
+  width: 200px;
+
+}
+
+/* styles.css ou le fichier CSS de votre composant */
+.congratulations-message {
+  color: green;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+
+
+.step-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+.strategy-section,
+.file-upload-section,
+.button-section,
+.table-section {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+  font-size: 20px;
+  font-weight: semi-bold;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Style des checkboxes */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 25px;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Section de téléchargement de fichier */
+.upload-label {
+  font-weight: bold;
+  color: #333;
+  margin-right: 10px;
+}
+
+.file-input {
+  cursor: pointer;
+}
+
+
+
+.preview-container h3 {
+  color: #1976d2; /* Couleur primaire Angular Material */
+}
+
+.table-container2 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container2 th, .table-container2 td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-container2 th {
+  background-color: #1976d2;
+  color: white;
+}
+
+.preview-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.step-section {
+  margin-bottom: 20px;
+}
+
+.step-subtitle {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #555;
+}
+.weight-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.weight-table th, .weight-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.weight-table th {
+  background-color: #f0f0f0;
+}
+
+.checkbox-group {
+  margin-top: 10px;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007bff;
+  border-radius: 3px;
+  margin-right: 10px;
+  position: relative;
+}
+
+input[type="checkbox"]:checked + .checkmark {
+  background-color: #007bff;
+}
+
+input[type="checkbox"]:checked + .checkmark:after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  width: 8px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espace entre chaque élément */
+}
+
+.input-spacing {
+  min-width: 250px; /* Définit une largeur minimale pour le select et l'input */
+}
+
+
+.form-row[_ngcontent-ng-c3128563092] {
+gap:3rem
+}
+
+.green-snackbar {
+  background-color: green !important;
+  color: white !important; /* Optionnel pour le contraste */
+}
+
+/* Style pour l'overlay de chargement */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.5em;
+  z-index: 1000;
+}
+
+/* Style pour le spinner de chargement */
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+/* Animation de rotation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.icon-red {
+  color: red;
+}
+
+.icon-black {
+  color: black;
+}
+
+
+
+.delete-icon {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #f44336; /* Couleur rouge pour l'icône de suppression */
+}
+
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

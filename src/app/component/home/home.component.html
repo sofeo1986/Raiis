@@ -1,0 +1,55 @@
+<body>
+    <div id="app">
+      <button 
+  class="sidebar-hide d-xl-none" 
+  (click)="toggleSidebar()" 
+  *ngIf="!isSidebarActive">☰
+</button>
+      <div id="sidebar" [class.active]="isSidebarActive" class="sidebar-wrapper">
+        <div class="sidebar-wrapper" >
+          <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+              <div class="logo">
+                <a href=""><img src="assets/images/icone2.png" alt="Logo"><b>BackTesting</b></a>
+              </div>
+              <button class="sidebar-hide d-xl-none" (click)="toggleSidebar()" *ngIf="isSidebarActive">
+                ✖
+              </button>
+            </div>
+          </div>
+          <div class="sidebar-menu">
+            <ul class="menu">
+  
+              <li class="sidebar-item" [ngClass]="{'active': isDashboardActive}">
+                <a [routerLink]="['dashbord']" class='sidebar-link' (click)="activateMenu('dashboard')">
+                  <i class="bi bi-grid-fill"></i>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+  
+              <li class="sidebar-item" [ngClass]="{'active': isPortfolioActive}">
+                <a [routerLink]="['create_portfolio']" class='sidebar-link' (click)="activateMenu('portfolio')">
+                  <i class="bi bi-pen-fill"></i>
+                  <span>Portfolio Creation</span>
+                </a>
+              </li>
+  
+              <li class="sidebar-item">
+                <a (click)="onSignOut()" class='sidebar-link'>
+                  <i class="bi-box-arrow-left"></i>
+                  <span>Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+        </div>
+      </div>
+  
+      <!-- Main Content -->
+      <div id="main">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </body>
+  
