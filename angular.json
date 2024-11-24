@@ -104,6 +104,7 @@
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/bootstrap.css",
               "src/assets/vendors/iconly/bold.css",
               "src/assets/vendors/perfect-scrollbarperfect-scrollbar.css",
