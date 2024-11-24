@@ -13,7 +13,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "/Raiis/",
+            "allowedCommonJsDependencies": ["papaparse", "ws"],
+
             "outputPath": "dist/backtesting",
             "index": "src/index.html",
             "browser": "src/main.ts",
